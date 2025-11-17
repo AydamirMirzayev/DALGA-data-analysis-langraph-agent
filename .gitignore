@@ -6,3 +6,4 @@ local_test.py
 *.env
 __pycache__/
 *.pyc
+bq_client.py
