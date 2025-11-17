@@ -48,6 +48,16 @@ def sql_generator_node_mock(intent, llm):
 
     return {"sql_query": sql}
 
+
+def bigquery_node_mock(sql, bq_client):
+    if not sql:
+        raise ValueError("SQL query is empty")
+
+    job = bq_client.query(sql)
+    rows = [dict(row) for row in job.result()]
+    return {"query_result": rows}
+
+
 def intent_parser_node(state: AgentState) -> dict:
         
     return ""
