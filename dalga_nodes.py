@@ -1,7 +1,7 @@
 from dalga_state_scema import AgentState
 import json
 from langchain_core.messages import SystemMessage, HumanMessage
-from dalga_config import INTENT_SYSTEM_PROMPT
+from dalga_config import INTENT_SYSTEM_PROMPT, SQL_SYSTEM_PROMPT
 from dalga_state_scema import Intent
 
 def intent_parser_node_mock(memory_context, user_input, llm):
@@ -17,10 +17,39 @@ def intent_parser_node_mock(memory_context, user_input, llm):
         "response_mime_type": "application/json"
     })
     intent_json = json.loads(response.content)
+    print(response.content)
     intent = Intent(**intent_json)
     return {'intent':intent}
 
+def clean_sql(sql_response):
+    """Remove markdown code blocks and extra whitespace"""
+    sql = sql_response.get('sql_query', '')
+    # Remove markdown code blocks
+    sql = sql.replace('```sql', '').replace('```', '')
+    # Strip whitespace
+    sql = sql.strip()
+    return sql
+
+def sql_generator_node_mock(intent, llm):
+    if intent is None:
+        raise ValueError("Intent not set")
+    
+    messages = [
+        SystemMessage(content=SQL_SYSTEM_PROMPT),
+        HumanMessage(content=intent.model_dump_json())
+    ]
+
+    resp = llm.invoke(messages, config={
+        "configurable": {
+            "response_mime_type": "text/plain"
+        }
+    })
+    sql = clean_sql(resp.content)
+
+    return {"sql_query": sql}
+
 def intent_parser_node(state: AgentState) -> dict:
+        
     return ""
 
 def  sql_generator_node(state: AgentState) -> dict:
