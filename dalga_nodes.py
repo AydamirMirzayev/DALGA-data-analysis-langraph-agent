@@ -1,7 +1,7 @@
 from dalga_state_scema import AgentState
 import json
 from langchain_core.messages import SystemMessage, HumanMessage
-from dalga_config import INTENT_SYSTEM_PROMPT, SQL_SYSTEM_PROMPT
+from dalga_config import INTENT_SYSTEM_PROMPT, SQL_SYSTEM_PROMPT, RESULT_SYSTEM_PROMPT
 from dalga_state_scema import Intent
 
 def intent_parser_node_mock(memory_context, user_input, llm):
@@ -57,6 +57,18 @@ def bigquery_node_mock(sql, bq_client):
     rows = [dict(row) for row in job.result()]
     return {"query_result": rows}
 
+def result_interpreter_node_mock(rows, intent, llm):
+    message = [
+        SystemMessage(content=RESULT_SYSTEM_PROMPT),
+        HumanMessage(content=json.dumps({
+            "intent": intent.model_dump(),
+            "rows": rows 
+        }))
+    ]
+
+    resp = llm.invoke(message)
+    analysis = resp.content
+    return {"analysis":analysis}
 
 def intent_parser_node(state: AgentState) -> dict:
         
