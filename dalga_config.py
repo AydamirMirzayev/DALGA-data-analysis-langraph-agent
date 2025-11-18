@@ -1,5 +1,3 @@
-print("dalga_config start")
-
 INTENT_SYSTEM_PROMPT = """
 You are an analytics planner for the thelook_ecommerce BigQuery dataset.
 Given the user query and conversation context, produce a JSON object describing
@@ -73,6 +71,16 @@ STRICT RULES:
     - profit: SUM(order_items.sale_price - products.cost)
     - orders: COUNT(DISTINCT orders.order_id)
     - customers: COUNT(DISTINCT users.id)
+
+CRITICAL - TIMESTAMP HANDLING:
+- All created_at, shipped_at, delivered_at, returned_at columns are TIMESTAMP type
+- When comparing with dates, ALWAYS use one of these patterns:
+  * DATE(timestamp_column) >= DATE('2024-01-01')
+  * timestamp_column >= TIMESTAMP('2024-01-01 00:00:00')
+  * For relative dates: DATE(timestamp_column) >= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+- NEVER compare TIMESTAMP directly with DATE without conversion
+- For "last month": DATE(created_at) >= DATE_TRUNC(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH), MONTH) AND DATE(created_at) < DATE_TRUNC(CURRENT_DATE(), MONTH)
+- For "last N days": DATE(created_at) >= DATE_SUB(CURRENT_DATE(), INTERVAL N DAY)
 
 INTENT EXAMPLE:
 {
