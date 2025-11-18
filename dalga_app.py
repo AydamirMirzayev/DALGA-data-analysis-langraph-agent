@@ -2,7 +2,10 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from google.cloud import bigquery
 from dalga_graph import create_graph
 from conversation_memory import ConversationMemory
+from dalga_state_scema import AgentState
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 class DalgaApp:
     "Application class to manage graph lifecycle"
@@ -24,5 +27,26 @@ class DalgaApp:
     
     def forward(self, user_question: str) -> str:
         """ Single forward pass of graph execution initiated by user question"""
-        
-        return ""
+        initial_state = AgentState(
+            parser_input=user_question,
+            memory_context=self.memory.get_memory()
+        )
+
+        config = {
+                    "configurable": {
+                        "llm": self.llm,
+                        "bq_client": self.bq_client
+                    }
+        }
+
+        final_state = self.graph.invoke(initial_state, config=config)
+
+        answer = final_state.get("final_answer", "No answer generated")
+                
+
+        self.memory.add_interaction(
+                    user_input=user_question,
+                    final_answer=answer
+        )
+
+        return answer
