@@ -50,3 +50,6 @@ class DalgaApp:
         )
 
         return answer
+    
+    def clear_conversation_memory(self):
+        self.memory.clear()

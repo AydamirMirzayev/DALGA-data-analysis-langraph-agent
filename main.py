@@ -13,6 +13,11 @@ def main():
         if user_input.lower() == 'quit':
             break
 
+        if user_input.lower() == 'clear':
+            app.clear_conversation_memory()
+            print(f"Conversation memory cleared \n")
+            continue
+
         try: 
             answer = app.forward(user_input)
             print(answer)

@@ -87,7 +87,6 @@ def intent_parser_node(state: AgentState, config: RunnableConfig) -> dict:
     })
 
     intent_json = json.loads(response.content)
-    print(response.content)
     intent = Intent(**intent_json)
     return {'intent':intent}
 
