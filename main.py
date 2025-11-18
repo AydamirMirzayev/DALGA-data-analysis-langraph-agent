@@ -1,4 +1,4 @@
-from dalga_app import DalgaApp
+from code.dalga_app import DalgaApp
 
 def main():
     app = DalgaApp()

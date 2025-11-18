@@ -1,6 +1,6 @@
-from dalga_nodes import intent_parser_node, sql_generator_node, bigquery_node
-from dalga_nodes import result_interpreter_node, answer_node
-from dalga_state_scema import AgentState
+from .dalga_nodes import intent_parser_node, sql_generator_node, bigquery_node
+from .dalga_nodes import result_interpreter_node, answer_node
+from .dalga_state_scema import AgentState
 from langgraph.graph import StateGraph, END
 
 

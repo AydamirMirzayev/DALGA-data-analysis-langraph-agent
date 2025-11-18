@@ -1,8 +1,8 @@
-from dalga_state_scema import AgentState
+from .dalga_state_scema import AgentState
 import json
 from langchain_core.messages import SystemMessage, HumanMessage
-from dalga_config import INTENT_SYSTEM_PROMPT, SQL_SYSTEM_PROMPT, RESULT_SYSTEM_PROMPT
-from dalga_state_scema import Intent
+from .dalga_config import INTENT_SYSTEM_PROMPT, SQL_SYSTEM_PROMPT, RESULT_SYSTEM_PROMPT
+from .dalga_state_scema import Intent
 from langchain_core.runnables import RunnableConfig
 
 """def intent_parser_node_mock(memory_context, user_input, llm):

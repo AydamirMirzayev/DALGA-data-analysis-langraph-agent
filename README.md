@@ -5,9 +5,9 @@ Backbone LLM used during development: ```gemini-2.0-flash```
 
 ## Refer to:
 
-High-level architecture in:[```architecture.md```](architecture.md)
+High-level architecture in:[```architecture.md```](docs/architecture.md)
 
-Sample run in: [```sample-run.md```](sample-run.md)
+Sample run in: [```sample-run.md```](docs/sample-run.md)
 
 
 ## Setup Instructions:

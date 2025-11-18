@@ -1,8 +1,8 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 from google.cloud import bigquery
-from dalga_graph import create_graph
-from conversation_memory import ConversationMemory
-from dalga_state_scema import AgentState
+from .dalga_graph import create_graph
+from .conversation_memory import ConversationMemory
+from .dalga_state_scema import AgentState
 import os
 from dotenv import load_dotenv
 load_dotenv()
