@@ -23,7 +23,7 @@ class Intent(BaseModel):
     notes: Optional[str] = None
 
 class AgentState(BaseModel):
-    parser_imput: str
+    parser_input: str
     memory_context: Dict[str, Any]
     intent: Optional[Intent] = None
     sql_query: Optional[str] = None
