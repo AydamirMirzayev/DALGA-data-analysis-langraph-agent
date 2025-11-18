@@ -18,7 +18,7 @@ class DalgaApp:
         )
         
         # GC client instance
-        self.bq_client = bigquery.Client(project=os.environ["GOOGLE_COUD_PROJECT_ID"])
+        self.bq_client = bigquery.Client(project=os.environ["GOOGLE_CLOUD_PROJECT_ID"])
         # LangGrap instance
         self.graph = create_graph()
         # Memory instance 

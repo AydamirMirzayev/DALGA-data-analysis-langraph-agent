@@ -5,9 +5,9 @@ Backbone LLM used during development: ```gemini-2.0-flash```
 
 ## Refer to:
 
-High-level architecture in: ```architecture.md``` 
+High-level architecture in:[```architecture.md```](architecture.md)
 
-Sample run in: ```sample-run.md```
+Sample run in: [```sample-run.md```](sample-run.md)
 
 
 ## Setup Instructions:
@@ -20,6 +20,8 @@ pip install requirements.txt
 ### 3. Create .env for Google Cloud and Google AI Studios credentials
 ```python
 GOOGLE_API_KEY="your-google-api-key"
-GOOGLE_COUD_PROJECT_ID="google-cloud-project-id"
+GOOGLE_CLOUD_PROJECT_ID="google-cloud-project-id"
 ```
 ### 4. Run ```main.py``` for demo
+
+Tested with Python 3.10.11
