@@ -6,6 +6,7 @@ from .dalga_state_scema import AgentState
 import os
 from dotenv import load_dotenv
 load_dotenv()
+from .dalga_config import CATEGORICAL_VALUE_CACHE_QUERY
 
 class DalgaApp:
     "Application class to manage graph lifecycle"
@@ -24,7 +25,23 @@ class DalgaApp:
         # Memory instance 
         self.memory = ConversationMemory()
 
-    
+        self.schema_cache = self._load_schema_cache()
+
+    def _load_schema_cache(self) -> dict:
+        """Fetch all categorical column values at initialization"""
+        
+        rows = self.bq_client.query(CATEGORICAL_VALUE_CACHE_QUERY)
+        
+        cache = {}
+        for row in rows:
+            col, val = row['col'], row['val']
+            if col not in cache:
+                cache[col] = []
+            cache[col].append(val)
+
+        print(f"Loaded schema value cache: {list(cache.keys())}")
+        return cache
+        
     def forward(self, user_question: str) -> str:
         """ Single forward pass of graph execution initiated by user question"""
         initial_state = AgentState(

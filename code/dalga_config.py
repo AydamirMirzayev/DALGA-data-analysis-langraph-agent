@@ -48,6 +48,17 @@ products (id, cost, category, name, brand, retail_price, department, sku, distri
 users (id, first_name, last_name, email, age, gender, state, street_address, postal_code, city, country, latitude, longitude, traffic_source, created_at, user_geom)
 - Customer demographics and location data
 
+SCHEMA CONTEXT:
+The input includes a "schema_context" object containing actual values for categorical columns.
+You MUST use these exact values in your WHERE clauses and filters.
+
+Example schema_context:
+{
+  "gender": ["M", "F"],
+  "order_status": ["Shipped", "Complete", "Cancelled", "Processing", "Returned"],
+  "department": ["Men", "Women"]
+}
+
 STRICT RULES:
 1. Generate ONLY SELECT statements - no DDL/DML/INSERT/UPDATE/DELETE
 2. Use ONLY the 4 tables listed above: orders, order_items, products, users
@@ -142,3 +153,19 @@ CRITICAL:
 - If the result set is empty or has <3 rows, acknowledge limited data
 - Focus on what matters most to an e-commerce business: revenue, customers, and growth
 """
+
+CATEGORICAL_VALUE_CACHE_QUERY = """
+            SELECT 'gender' as col, gender as val FROM `bigquery-public-data.thelook_ecommerce.users` WHERE gender IS NOT NULL GROUP BY gender
+            UNION ALL
+            SELECT 'traffic_source', traffic_source FROM `bigquery-public-data.thelook_ecommerce.users` WHERE traffic_source IS NOT NULL GROUP BY traffic_source
+            UNION ALL
+            SELECT 'country', country FROM `bigquery-public-data.thelook_ecommerce.users` WHERE country IS NOT NULL GROUP BY country
+            UNION ALL
+            SELECT 'order_status', status FROM `bigquery-public-data.thelook_ecommerce.orders` WHERE status IS NOT NULL GROUP BY status
+            UNION ALL
+            SELECT 'category', category FROM `bigquery-public-data.thelook_ecommerce.products` WHERE category IS NOT NULL GROUP BY category
+            UNION ALL
+            SELECT 'department', department FROM `bigquery-public-data.thelook_ecommerce.products` WHERE department IS NOT NULL GROUP BY department
+            UNION ALL
+            SELECT 'brand', brand FROM `bigquery-public-data.thelook_ecommerce.products` WHERE brand IS NOT NULL GROUP BY brand
+        """

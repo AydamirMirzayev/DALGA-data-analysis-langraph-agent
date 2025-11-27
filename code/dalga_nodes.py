@@ -98,12 +98,17 @@ def  sql_generator_node(state: AgentState, config: RunnableConfig) -> dict:
 
     intent = state.intent
 
+    schema_context = state.schema_context or {}
+
     if intent is None:
         raise ValueError("Intent not set")
     
     messages = [
         SystemMessage(content=SQL_SYSTEM_PROMPT),
-        HumanMessage(content=intent.model_dump_json())
+        HumanMessage(content=json.dumps({
+                     "intent" : intent.model_dump_json(),
+                     "schema_context": schema_context
+        }))
     ]
 
     resp = llm.invoke(messages, config={

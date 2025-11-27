@@ -7,8 +7,8 @@ class Filter(BaseModel):
     value: Any
 
 class Ordering(BaseModel):
-    by: str
-    direction: str  # "asc" or "desc"
+    by: Optional[str] = None
+    direction: Optional[str] = None  # "asc" or "desc"
 
 class Intent(BaseModel):
     operation: str
@@ -25,6 +25,7 @@ class Intent(BaseModel):
 class AgentState(BaseModel):
     parser_input: str
     memory_context: Dict[str, Any]
+    schema_context: Optional[Dict[str, List[str]]] = None
     intent: Optional[Intent] = None
     sql_query: Optional[str] = None
     query_result: Optional[List[Dict[str, Any]]] = None
