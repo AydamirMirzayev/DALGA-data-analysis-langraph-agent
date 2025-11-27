@@ -1,4 +1,5 @@
 from code.dalga_app import DalgaApp
+from langsmith import Client
 
 def main():
     app = DalgaApp()

@@ -4,6 +4,7 @@ from langchain_core.messages import SystemMessage, HumanMessage
 from .dalga_config import INTENT_SYSTEM_PROMPT, SQL_SYSTEM_PROMPT, RESULT_SYSTEM_PROMPT
 from .dalga_state_scema import Intent
 from langchain_core.runnables import RunnableConfig
+from langsmith import traceable
 
 """def intent_parser_node_mock(memory_context, user_input, llm):
     messages = [
@@ -114,7 +115,7 @@ def  sql_generator_node(state: AgentState, config: RunnableConfig) -> dict:
 
     return {"sql_query": sql}
 
-
+@traceable(run_type="tool", name="BigQuery Execution")
 def bigquery_node(state: AgentState, config: RunnableConfig) -> dict:
 
     """get language model from config"""

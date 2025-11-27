@@ -17,10 +17,14 @@ Sample run in: [```sample-run.md```](docs/sample-run.md)
 ```bash
 pip install requirements.txt
 ```
-### 3. Create .env for Google Cloud and Google AI Studios credentials
+### 3. Create .env for Google Cloud, Google AI Studios, and LangSmith credentials
 ```python
 GOOGLE_API_KEY="your-google-api-key"
 GOOGLE_CLOUD_PROJECT_ID="google-cloud-project-id"
+LANGCHAIN_TRACING_V2=true
+LANGSMITH_ENDPOINT=your-endpoint
+LANGCHAIN_PROJECT=project-name
+LANGCHAIN_API_KEY=your_langsmith_api_key
 ```
 ### 4. Run ```main.py``` for demo
 
